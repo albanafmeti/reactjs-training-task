@@ -18,7 +18,7 @@ const PRODUCTS = [
     {
         id: 3,
         name: "Laptop Bag",
-        price: "1200",
+        price: "120",
         description: "When business calls, make sure you're ready with this Kensington 62340 Contour Pro black nylon laptop carrying case! This laptop case is designed with all the amenities you need to take your office on the road. A laptop compartment ensures safe transport of your 17\" laptop, giving you peace of mind when you're on the go. At the same time, the exterior front pockets allow for superior organization. Durable zip closures keep contents contained so there's no threat of unfortunate spills on the way to your destination.",
         creation_date: moment('2018/05/18', 'YYYY/MM/DD'),
     },
