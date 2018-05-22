@@ -1,27 +1,35 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class ProductDetails extends Component {
+
+    static propTypes = {
+        product: PropTypes.object.isRequired
+    };
+
     render() {
+
+        const {product} = this.props;
+
         return (
             <table className="table">
                 <tbody>
                 <tr>
                     <th scope="row">Name</th>
-                    <td>USB Card</td>
+                    <td>{product.name}</td>
                 </tr>
                 <tr>
                     <th scope="row">Price</th>
-                    <td>10 $</td>
+                    <td>{product.price} $</td>
                 </tr>
                 <tr>
                     <th scope="row">Creation Date</th>
-                    <td>2018/05/23</td>
+                    <td>{product.creation_date.format('YYYY/MM/DD')}</td>
                 </tr>
                 <tr>
                     <td colSpan="2">
                         <p><strong>Description</strong></p>
-                        <p>We put here the descriptiono of the product. We put here the descriptiono of the product.
-                            We put here the descriptiono of the product. </p>
+                        <div>{product.description ? product.description : <p className="text-center">No description specified.</p>}</div>
                     </td>
                 </tr>
                 </tbody>

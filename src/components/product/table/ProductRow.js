@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link, withRouter} from 'react-router-dom';
 
 class ProductRow extends Component {
 
@@ -9,20 +10,44 @@ class ProductRow extends Component {
         removeProduct: PropTypes.func.isRequired,
     };
 
+    onRowCLick = (e) => {
+        e.preventDefault();
+
+        if (e.target.parentElement.className === 'product-row') {
+            let path = `/products/${this.props.product.id}/details`;
+            this.props.history.push(path);
+        }
+    };
+
     render() {
+
+        const {product, removeProduct} = this.props;
+
         return (
-            <tr>
-                <th scope="row">{this.props.product.id}</th>
-                <td>{this.props.product.name}</td>
-                <td>{this.props.product.price} $</td>
-                <td>{this.props.product.creation_date}</td>
+            <tr className="product-row" onClick={this.onRowCLick}>
+
+                <th scope="row">{product.id}</th>
+                <td><Link className="btn btn-link" to={`/products/${product.id}/details`}>{product.name}</Link></td>
+                <td>{product.price} $</td>
+                <td>{product.creation_date.format('YYYY/MM/DD')}</td>
                 <td>
-                    <a href="#" className="btn btn-success mr-1" title="Edit"><span className="fa fa-pencil"></span></a>
-                    <a href="#" className="btn btn-danger mr-1" title="Delete"><span className="fa fa-times"></span></a>
+
+                    <Link to={`/products/${product.id}/edit`} className="btn btn-success mr-1"
+                          title="Edit"><span className="fa fa-pencil"></span></Link>
+
+                    <a className="btn btn-danger mr-1" title="Remove" onClick={() => {
+                        if (window.confirm('Are you sure you want to remove this record?')) {
+                            removeProduct(product.id);
+                        }
+                    }}>
+                        <span className="fa fa-times"></span>
+                    </a>
+
                 </td>
+
             </tr>
         );
     }
 }
 
-export default ProductRow;
+export default withRouter(ProductRow);

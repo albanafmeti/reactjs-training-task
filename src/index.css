@@ -1,5 +1,17 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: Raleway, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: Raleway, sans-serif;
+}
+
+.btn-danger, .btn-success, .btn-primary, .btn-secondary, .btn-info {
+    color: #fff !important;
+}
+
+.react-datepicker-wrapper, .react-datepicker__input-container {
+    display: block !important;
+}
+
+.products-table tr {
+    cursor: pointer;
 }

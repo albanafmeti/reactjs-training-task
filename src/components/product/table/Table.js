@@ -13,17 +13,17 @@ class Table extends Component {
 
     render() {
 
-        const {products} = this.props;
+        const {products, updateProduct, removeProduct} = this.props;
 
         const productComponents = products.map((product, index) => {
             return <ProductRow product={product} key={product.id}
-                               updateProduct={this.props.updateProduct}
-                               removeProduct={this.props.removeProduct}/>;
+                               updateProduct={updateProduct}
+                               removeProduct={removeProduct}/>;
         });
 
 
         return (
-            <table className="table table-striped">
+            <table className="products-table table table-striped table-hover">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -49,4 +49,4 @@ class Table extends Component {
     }
 }
 
-export default Table
+export default Table;

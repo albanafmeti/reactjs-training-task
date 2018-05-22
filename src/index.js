@@ -2,6 +2,8 @@ import React from 'react';
 
 import './index.css';
 
+import toastr from 'toastr';
+
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -12,9 +14,11 @@ import {createStore} from 'redux';
 import ProductReducer from './reducers/product';
 import PRODUCTS from './data/products';
 
-let initialState = {
-    products: PRODUCTS,
-    filteredProducts: [],
+const initialState = {
+    products: [...PRODUCTS],
+    filteredProducts: [...PRODUCTS],
+
+    isFiltered: false
 };
 
 let store = createStore(ProductReducer, initialState);
@@ -25,5 +29,7 @@ render(
     </Provider>,
     document.getElementById('root')
 );
+
+toastr.options.progressBar = true;
 
 registerServiceWorker();

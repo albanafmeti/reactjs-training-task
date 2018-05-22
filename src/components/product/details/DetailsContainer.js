@@ -1,22 +1,48 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+
 import ProductDetails from "./ProductDetails";
+import NotFound from '../../general/NotFound';
 
-const DetailsContainer = () => {
-    return (
-        <div className="card">
-            <h5 className="card-header">Product Name
+class DetailsContainer extends Component {
+    render() {
 
-                <a href="#" className="btn btn-sm btn-link pull-right"><i
-                    className="fa fa-arrow-left"></i>&nbsp;&nbsp;Back to
-                    list</a>
-            </h5>
-            <div className="card-body">
+        const {products, match} = this.props;
 
-                <ProductDetails/>
+        const product_id = parseInt(match.params.id, 10);
 
+        const product = products.filter(function (product) {
+            return product.id === product_id;
+        }).pop();
+
+        if (!product) {
+            return <NotFound/>;
+        }
+
+        return (
+            <div className="card">
+                <h5 className="card-header">{product.name}
+
+                    <Link to='/products' className="btn btn-sm btn-link pull-right"><i
+                        className="fa fa-arrow-left"></i>&nbsp;&nbsp;Back to list</Link>
+
+                </h5>
+                <div className="card-body">
+
+                    <ProductDetails product={product}/>
+
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
+}
+
+
+const mapStateToProps = state => {
+    return {
+        products: state.products
+    }
 };
 
-export default DetailsContainer;
+export default connect(mapStateToProps)(DetailsContainer);
