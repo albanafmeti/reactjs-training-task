@@ -66,7 +66,7 @@ class EditProduct extends Component {
         const {product} = this.props;
 
         this.setState({
-            product: product
+            product: Object.assign({}, product)
         });
     }
 
