@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ProductRow from './ProductRow';
-
 import PropTypes from 'prop-types';
+
+import ProductRow from './ProductRow';
 
 class Table extends Component {
 

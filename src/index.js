@@ -1,4 +1,7 @@
 import React from 'react';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
 
 import './index.css';
 
@@ -6,10 +9,6 @@ import toastr from 'toastr';
 
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-
-import {render} from 'react-dom';
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
 
 import ProductReducer from './reducers/product';
 import PRODUCTS from './data/products';

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+
 import Table from './Table';
 import SearchForm from './SearchForm';
 import AddProduct from "./AddProduct";
-
 import * as ProductActionCreators from "../../../actions/product";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
 
 class TableContainer extends Component {
 
