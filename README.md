@@ -17,6 +17,7 @@ Product in our application should have these properties
 All these properties should be editable. It is a good practice to have separate react component (form based) for editing these properties.
 
 Web Application should have sections listed below
+--------------------------------------------------
 
 *List of Products*		– 	Page shows all products from local storage. User can remove product from this page or navigate to product view or edit pages.
 
