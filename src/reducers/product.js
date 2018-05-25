@@ -9,29 +9,25 @@ export default function Product(state, action) {
     switch (action.type) {
         case ProductActionTypes.FETCH_PRODUCTS:
 
-            let newState = null;
-
             if (action.query) {
 
                 let filteredProducts = state.products.filter(function (product) {
                     return product.name.toLowerCase().indexOf(action.query.toLowerCase()) !== -1;
                 });
 
-                newState = Object.assign({}, state, {
+                return {
+                    ...state,
                     filteredProducts: filteredProducts,
-
                     isFiltered: true
-                });
+                };
 
             } else {
-                newState = Object.assign({}, state, {
+                return {
+                    ...state,
                     filteredProducts: state.products,
-
                     isFiltered: false
-                });
+                }
             }
-
-            return newState;
 
         case ProductActionTypes.ADD_PRODUCT:
 
@@ -47,14 +43,13 @@ export default function Product(state, action) {
             };
 
             products.push(newProduct);
-            filteredProducts.push(newProduct);
 
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 products: [...products],
                 filteredProducts: [...products],
-
                 isFiltered: false
-            });
+            };
 
 
         case ProductActionTypes.UPDATE_PRODUCT:
@@ -69,10 +64,11 @@ export default function Product(state, action) {
                 return product;
             });
 
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 products: [...products],
                 filteredProducts: [...products],
-            });
+            };
 
 
         case ProductActionTypes.REMOVE_PRODUCT:
@@ -85,10 +81,12 @@ export default function Product(state, action) {
                 return product.id !== action.id;
             });
 
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 products: products,
                 filteredProducts: filteredProducts
-            });
+            };
+
         default:
             return state;
     }

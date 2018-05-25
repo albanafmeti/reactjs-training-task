@@ -6,6 +6,7 @@ import ProductDetails from "./ProductDetails";
 import NotFound from '../../general/NotFound';
 
 class DetailsContainer extends Component {
+
     render() {
 
         const {products, match} = this.props;

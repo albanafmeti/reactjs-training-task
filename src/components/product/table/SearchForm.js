@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Text from "../../general/input/Text";
 
 class SearchForm extends Component {
 
@@ -8,34 +9,25 @@ class SearchForm extends Component {
         isFiltered: PropTypes.bool.isRequired
     };
 
-    state = {
-        query: ""
-    };
-
-    onChange = (e) => {
-        this.setState({
-            query: e.target.value
-        });
-    };
-
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.fetchProducts(this.state.query);
+        this.props.fetchProducts(this.searchInput.getValue());
     };
 
     clearSearch = () => {
-        this.setState({
-            query: ""
-        });
+        this.searchInput.setValue("");
         this.props.fetchProducts();
     };
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.isFiltered !== nextProps.isFiltered;
+    }
 
     render() {
 
         let clearSearchBtn = "";
         if (this.props.isFiltered) {
-            clearSearchBtn = <button className="btn btn-outline-danger"
-                                     type="submit" title="Clear Search"
+            clearSearchBtn = <button className="btn btn-outline-danger" title="Clear Search"
                                      onClick={this.clearSearch}><i className="fa fa-times"></i></button>;
         }
 
@@ -47,12 +39,14 @@ class SearchForm extends Component {
                             <span className="input-group-text"><i className="fa fa-search"></i></span>
                         </div>
 
-                        <input type="text" className="form-control" placeholder="Search by name"
-                               value={this.state.query} onChange={this.onChange}/>
+                        <Text placeholder="Search by name" ref={(input) => this.searchInput = input}/>
 
                         <div className="input-group-append">
+
                             {clearSearchBtn}
+
                             <button className="btn btn-outline-secondary" type="submit">Search</button>
+
                         </div>
                     </div>
                 </div>

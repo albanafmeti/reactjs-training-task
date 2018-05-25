@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 
-class ProductDetails extends Component {
+class ProductDetails extends PureComponent {
 
     static propTypes = {
         product: PropTypes.object.isRequired
@@ -29,7 +29,8 @@ class ProductDetails extends Component {
                 <tr>
                     <td colSpan="2">
                         <p><strong>Description</strong></p>
-                        <div>{product.description ? product.description : <p className="text-center">No description specified.</p>}</div>
+                        <div>{product.description ? product.description :
+                            <p className="text-center">No description specified.</p>}</div>
                     </td>
                 </tr>
                 </tbody>

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 
-class ProductRow extends Component {
+class ProductRow extends PureComponent {
 
     static propTypes = {
         product: PropTypes.object.isRequired,

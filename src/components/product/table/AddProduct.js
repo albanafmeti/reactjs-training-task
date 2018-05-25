@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import toastr from 'toastr';
+import {Modal, ModalHeader, ModalBody} from 'reactstrap';
+
+import Text from "../../general/input/Text";
+import Number from "../../general/input/Number";
+import Textarea from "../../general/input/Textarea";
 
 class AddProduct extends Component {
 
@@ -9,117 +14,105 @@ class AddProduct extends Component {
     };
 
     state = {
-        product: {
-            name: "",
-            price: "",
-            description: ""
-        }
+        modal: false,
     };
 
-    handleChange = (fieldName, event) => {
-        const product = this.state.product;
-
-        product[fieldName] = event.target.value;
-        this.setState({product: product});
+    toggleModal = () => {
+        this.setState({
+            ...this.state,
+            modal: !this.state.modal
+        });
     };
 
     handleSubmit = (e) => {
         e.preventDefault();
 
         if (this.isValidForm()) {
-            this.props.addProduct(this.state.product);
-            window.jQuery('#add-product-modal').modal('hide');
+
+            this.props.addProduct({
+                name: this.nameInput.getValue(),
+                price: this.priceInput.getValue(),
+                description: this.descriptionInput.getValue(),
+            });
+
+            this.toggleModal();
 
             toastr.success("Product added successfully.");
-            this.resetForm();
         }
     };
 
-    resetForm = () => {
-        this.setState({
-            product: {
-                name: "",
-                price: "",
-                description: ""
-            }
-        });
-    };
-
     isValidForm = () => {
-        if (this.state.product.name === "") {
+
+        if (this.nameInput.isEmpty()) {
             toastr.error("Name is required.");
+
             return false;
-        } else if (this.state.product.price === "") {
+        } else if (this.priceInput.isEmpty()) {
             toastr.error("Price is required.");
+
             return false;
         }
 
         return true;
     };
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.modal !== nextState.modal;
+    }
+
     render() {
         return (
-            <div className="modal fade" id="add-product-modal" tabIndex="-1" role="dialog" aria-labelledby="Add Product"
-                 aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Add Product</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
+            <div className="d-inline">
 
-                            <form onSubmit={this.handleSubmit}>
-                                <div className="form-group">
-                                    <label>Name</label>
+                <button className="btn btn-sm btn-primary pull-right" onClick={this.toggleModal}>
+                    <i className="fa fa-plus"></i> Add Product
+                </button>
 
-                                    <input type="text" name="name" className="form-control"
-                                           placeholder="Product Name"
-                                           value={this.state.product.name}
-                                           onChange={this.handleChange.bind(this, 'name')}/>
+                <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
 
-                                </div>
-                                <div className="form-group">
-                                    <label>Price</label>
-                                    <div className="input-group">
+                    <ModalHeader toggle={this.toggleModal}>Add Product</ModalHeader>
 
-                                        <input type="number" className="form-control"
-                                               placeholder=" Product Price"
-                                               value={this.state.product.price}
-                                               onChange={this.handleChange.bind(this, 'price')}/>
+                    <ModalBody>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group">
+                                <label>Name</label>
 
-                                        <div className="input-group-append">
-                                            <span className="input-group-text">$</span>
-                                        </div>
+                                <Text placeholder="Product Name" ref={(input) => this.nameInput = input}/>
+
+                            </div>
+                            <div className="form-group">
+                                <label>Price</label>
+                                <div className="input-group">
+
+                                    <Number placeholder="Product Price" ref={(input) => this.priceInput = input}/>
+
+                                    <div className="input-group-append">
+                                        <span className="input-group-text">$</span>
                                     </div>
                                 </div>
-                                <div className="form-group">
-                                    <label>Description</label>
+                            </div>
+                            <div className="form-group">
+                                <label>Description</label>
 
-                                    <textarea className="form-control"
-                                              placeholder="Product Description"
-                                              rows="3"
-                                              value={this.state.product.description}
-                                              onChange={this.handleChange.bind(this, 'description')}></textarea>
-                                </div>
+                                <Textarea placeholder="Product Description"
+                                          ref={(input) => this.descriptionInput = input}/>
 
-                                <p className="text-right m-0">
+                            </div>
 
-                                    <button type="button" className="btn btn-outline-secondary pull-left"
-                                            data-dismiss="modal">Close
-                                    </button>
+                            <p className="text-right m-0">
 
-                                    <button type="submit" className="btn btn-primary">
-                                        <i className="fa fa-plus"></i>&nbsp;&nbsp;Add
-                                    </button>
-                                </p>
-                            </form>
+                                <button type="button" className="btn btn-outline-secondary pull-left"
+                                        onClick={this.toggleModal}>Close
+                                </button>
 
-                        </div>
-                    </div>
-                </div>
+                                <button type="submit" className="btn btn-primary">
+                                    <i className="fa fa-plus"></i>&nbsp;&nbsp;Add
+                                </button>
+                            </p>
+                        </form>
+                    </ModalBody>
+
+                </Modal>
             </div>
         );
     }

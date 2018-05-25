@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 
 import Table from './Table';
@@ -11,20 +10,15 @@ class TableContainer extends Component {
 
     render() {
 
-        const {products, isFiltered, dispatch} = this.props;
-        const updateProduct = bindActionCreators(ProductActionCreators.updateProduct, dispatch);
-        const removeProduct = bindActionCreators(ProductActionCreators.removeProduct, dispatch);
-        const addProduct = bindActionCreators(ProductActionCreators.addProduct, dispatch);
-        const fetchProducts = bindActionCreators(ProductActionCreators.fetchProducts, this.props.dispatch);
+        const {products, isFiltered, updateProduct, removeProduct, addProduct, fetchProducts} = this.props;
 
         return (
             <div>
                 <div className="card">
-                    <h5 className="card-header">List of products
+                    <div className="card-header">List of products
 
-                        <a className="btn btn-sm btn-primary pull-right" data-toggle="modal"
-                           data-target="#add-product-modal"><i className="fa fa-plus"></i>&nbsp;&nbsp;Add Product</a>
-                    </h5>
+                        <AddProduct addProduct={addProduct}/>
+                    </div>
                     <div className="card-body">
 
                         <SearchForm fetchProducts={fetchProducts}
@@ -37,8 +31,6 @@ class TableContainer extends Component {
 
                     </div>
                 </div>
-
-                <AddProduct addProduct={addProduct}/>
             </div>
         )
     }
@@ -51,4 +43,13 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps)(TableContainer);
+const mapDispatchToProps = dispatch => {
+    return {
+        updateProduct: (id, data) => dispatch(ProductActionCreators.updateProduct(id, data)),
+        removeProduct: (id) => dispatch(ProductActionCreators.removeProduct(id)),
+        addProduct: (data) => dispatch(ProductActionCreators.addProduct(data)),
+        fetchProducts: (query) => dispatch(ProductActionCreators.fetchProducts(query)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableContainer);

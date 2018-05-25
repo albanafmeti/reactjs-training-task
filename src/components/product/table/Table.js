@@ -11,6 +11,10 @@ class Table extends Component {
         removeProduct: PropTypes.func.isRequired,
     };
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.props.products.length !== nextProps.products.length;
+    }
+
     render() {
 
         const {products, updateProduct, removeProduct} = this.props;

@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 import './index.css';
 
 import toastr from 'toastr';
