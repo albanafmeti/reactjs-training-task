@@ -55,10 +55,6 @@ class AddProduct extends Component {
         return true;
     };
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.state.modal !== nextState.modal;
-    }
-
     render() {
         return (
             <div className="d-inline">
