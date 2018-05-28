@@ -19,7 +19,6 @@ class AddProduct extends Component {
 
     toggleModal = () => {
         this.setState({
-            ...this.state,
             modal: !this.state.modal
         });
     };
